@@ -55,13 +55,25 @@ public class Event extends Activity {
 		this.eventDetails = eventDetails;
 	}
 	
-	public void setMeetingDays() {
-		
+	public void setMeetingDays(String meetingDays) {
+		if (meetingDays == null || meetingDays == "") {
+			throw new IllegalArgumentException();
+		}
+		if (meetingDays.indexOf("A") != -1) {
+			throw new IllegalArgumentException();
+		}
+		for (int i = 0; i < meetingDays.length(); i++) {
+			char letter = meetingDays.charAt(i);
+			if (letter != 'M' && letter != 'T' && letter != 'W' && letter != 'H' && letter != 'F' && letter != 'S' && letter != 'U') {
+				throw new IllegalArgumentException();
+			}
+		}
+		super.setMeetingDays(meetingDays);
 	}
 	
 	@Override
 	public String getMeetingString() {
-		return super.getMeetingString();
+		return super.getMeetingString() + " (every " + this.getWeeklyRepeat() + " weeks)";
 	}
 
 	/* (non-Javadoc)
@@ -69,7 +81,7 @@ public class Event extends Activity {
 	 */
 	@Override
 	public String toString() {
-		return super.toString();
+		return getTitle() + "," + getMeetingDays() + "," + getStartTime() + "," + getEndTime() + "," + weeklyRepeat + "," + eventDetails;
 	}
 
 	@Override
@@ -82,5 +94,10 @@ public class Event extends Activity {
 	public String[] getLongDisplayArray() {
 		String[] longArray = {"", "", this.getTitle(), "", "", this.getMeetingString(), this.getEventDetails()};
 		return longArray;
+	}
+
+	@Override
+	public boolean isDuplicate(Activity activity) {
+		return false;
 	}
 }

@@ -185,6 +185,25 @@ public class Course extends Activity {
 		this.instructorId = instructorId;
 	}
 
+	public void setMeetingDays(String meetingDays) {
+		if (meetingDays == null) {
+			throw new IllegalArgumentException();
+		}
+		if (meetingDays.length() < 1) {
+			throw new IllegalArgumentException();
+		}
+		if (meetingDays.indexOf("A") >= 0 && meetingDays.length() != 1) {
+			throw new IllegalArgumentException();
+		}
+		for (int i = 0; i < meetingDays.length(); i++) {
+			char letter = meetingDays.charAt(i);
+			if (letter != 'M' && letter != 'T' && letter != 'W' && letter != 'H' && letter != 'F'
+					&& letter != 'A') {
+				throw new IllegalArgumentException();
+			}
+		}
+		super.setMeetingDays(meetingDays);
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
@@ -262,5 +281,11 @@ public class Course extends Activity {
 	public String[] getLongDisplayArray() {
 		String[] longArray = {this.getName(), this.getSection(), this.getTitle(), Integer.toString(this.getCredits()), this.getInstructorId(), this.getMeetingString(), ""};
 		return longArray;
+	}
+
+	@Override
+	public boolean isDuplicate(Activity activity) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

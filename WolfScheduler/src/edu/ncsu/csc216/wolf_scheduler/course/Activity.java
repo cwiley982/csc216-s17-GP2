@@ -18,12 +18,9 @@ public abstract class Activity {
 	public Activity(String title, String meetingDays, int startTime, int endTime) {
 		setTitle(title);
 		setMeetingDays(meetingDays);
-		setCourseTime(startTime, endTime);		
+		setActivityTime(startTime, endTime);		
 	}
 
-	public abstract String[] getShortDisplayArray();
-	
-	public abstract String[] getLongDisplayArray();
 	/**
 	 * Returns Course's title
 	 * 
@@ -67,22 +64,6 @@ public abstract class Activity {
 	 *            the meetingDays to set
 	 */
 	public void setMeetingDays(String meetingDays) {
-		if (meetingDays == null) {
-			throw new IllegalArgumentException();
-		}
-		if (meetingDays.length() < 1) {
-			throw new IllegalArgumentException();
-		}
-		if (meetingDays.indexOf("A") >= 0 && meetingDays.length() != 1) {
-			throw new IllegalArgumentException();
-		}
-		for (int i = 0; i < meetingDays.length(); i++) {
-			char letter = meetingDays.charAt(i);
-			if (letter != 'M' && letter != 'T' && letter != 'W' && letter != 'H' && letter != 'F'
-					&& letter != 'A') {
-				throw new IllegalArgumentException();
-			}
-		}
 		this.meetingDays = meetingDays;
 	}
 
@@ -110,7 +91,7 @@ public abstract class Activity {
 	 * @param startTime start time of course
 	 * @param endTime end time of course
 	 */
-	public void setCourseTime(int startTime, int endTime) {
+	public void setActivityTime(int startTime, int endTime) {
 		if (startTime < 0 || startTime >= UPPER_TIME || endTime < 0 || endTime >= UPPER_TIME) {
 			throw new IllegalArgumentException();
 		}
@@ -186,6 +167,12 @@ public abstract class Activity {
 		}
 	}
 
+	public abstract String[] getShortDisplayArray();
+	
+	public abstract String[] getLongDisplayArray();
+	
+	public abstract boolean isDuplicate(Activity activity);
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
