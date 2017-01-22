@@ -59,6 +59,7 @@ public class Event extends Activity {
 		
 	}
 	
+	@Override
 	public String getMeetingString() {
 		return super.getMeetingString();
 	}
