@@ -141,6 +141,12 @@ public abstract class Activity {
 					meetingString += "0";
 				}
 				meetingString += "PM-";
+			} else if (startHour == 12) {
+				meetingString += startHour + ":" + startMinutes;
+				if (startMinutes == 0) {
+					meetingString += "0";
+				}
+				meetingString += "PM-";
 			} else {
 				meetingString += startHour + ":" + startMinutes;
 				if (startMinutes == 0) {
@@ -152,6 +158,12 @@ public abstract class Activity {
 			int endMinutes = getEndTime() % 100;
 			if (endHour > 12) {
 				meetingString += endHour - 12 + ":" + endMinutes;
+				if (endMinutes == 0) {
+					meetingString += "0";
+				}
+				meetingString += "PM";
+			} else if (endHour == 12) {
+				meetingString +=endHour + ":" + endMinutes;
 				if (endMinutes == 0) {
 					meetingString += "0";
 				}
