@@ -100,7 +100,7 @@ public class CourseRecordIOTest {
 		courses.add(new Course("CSC216", "Programming Concepts - Java", "601", 4, "jep", "A"));
 		
 		try {
-			CourseRecordIO.writeCourseRecords("test-files/actual_course_records.txt", courses);
+			ActivityRecordIO.writeActivityRecords("test-files/actual_course_records.txt", courses);
 		} catch (IOException e) {
 			fail("Cannot write to course records file");
 		}
