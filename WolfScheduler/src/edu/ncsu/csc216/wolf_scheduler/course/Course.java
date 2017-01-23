@@ -3,7 +3,6 @@
  */
 package edu.ncsu.csc216.wolf_scheduler.course;
 
-
 /**
  * Creates a Course object with fields specifying the name, section, instructor's id, times, etc
  * 
@@ -285,7 +284,15 @@ public class Course extends Activity {
 
 	@Override
 	public boolean isDuplicate(Activity activity) {
-		// TODO Auto-generated method stub
-		return false;
+		Course course = null;
+		if (activity instanceof Course) {
+			course = (Course) activity;
+			if (course.getName().equals(this.getName())) {
+				return true; //if the names do match therefore it's a duplicate
+			}
+			return false; //if the names don't match
+		} else { //if activity is an event
+			return false;
+		}
 	}
 }

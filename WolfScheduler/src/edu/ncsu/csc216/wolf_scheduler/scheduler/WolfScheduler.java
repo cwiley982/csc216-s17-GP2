@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import edu.ncsu.csc216.wolf_scheduler.course.Activity;
 import edu.ncsu.csc216.wolf_scheduler.course.Course;
 import edu.ncsu.csc216.wolf_scheduler.io.ActivityRecordIO;
 import edu.ncsu.csc216.wolf_scheduler.io.CourseRecordIO;
@@ -22,7 +23,7 @@ public class WolfScheduler {
 	/** Array list of courses available to add to a schedule */
 	public ArrayList<Course> courseCatalog;
 	/** Array list of courses currently on the schedule */
-	public ArrayList<Course> schedule;
+	public ArrayList<Activity> schedule;
 	/** Title of the schedule */
 	public String scheduleTitle;
 	
@@ -33,7 +34,7 @@ public class WolfScheduler {
 	 */
 	public WolfScheduler(String fileName) {
 		courseCatalog = new ArrayList<Course>();
-		schedule = new ArrayList<Course>();
+		schedule = new ArrayList<Activity>();
 		scheduleTitle = "My Schedule";
 		try {
 			courseCatalog = CourseRecordIO.readCourseRecords(fileName);
@@ -162,18 +163,24 @@ public class WolfScheduler {
 	 * @return true if course can be added
 	 */
 	public boolean addCourse(String name, String section) {
+		//if course isn't a duplicate and exists in the catalog, add it to the schedule
+		Course course = null;
+		//finds course in catalog, this will be passed into isDuplicate method
+		for (int i = 0; i < courseCatalog.size(); i++) {
+			if (courseCatalog.get(i).getName().equals(name) && courseCatalog.get(i).getSection().equals(section)) {
+				course = courseCatalog.get(i);
+			}
+		}
+		//goes through entire schedule to see if student is already enrolled in the course (if it's a duplicate)
 		for (int i = 0; i < schedule.size(); i++) {
-			if (schedule.get(i).getName().equals(name)) {
+			if (course.isDuplicate(schedule.get(i))) {
 				throw new IllegalArgumentException("You are already enrolled in " + name);
 			}
 		}
-		for (int i = 0; i < courseCatalog.size(); i++) {
-			if (courseCatalog.get(i).getName().equals(name) && courseCatalog.get(i).getSection().equals(section)) {
-				schedule.add(courseCatalog.get(i));
-				return true;
-			}
-		}
- 		return false;
+		//adds course to schedule
+		schedule.add(course);
+		return true;
+ 		//return false;
 	}
 
 	/**

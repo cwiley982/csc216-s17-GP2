@@ -98,6 +98,15 @@ public class Event extends Activity {
 
 	@Override
 	public boolean isDuplicate(Activity activity) {
-		return false;
+		Event event = null;
+		if (activity instanceof Event) {
+			event = (Event) activity;
+			if (event.getTitle().equals(this.getTitle())) {
+				return true; //if event titles do match, therefore they're duplicates
+			}
+			return false; //if event titles don't match
+		} else {
+			return false; //if activity is a course
+		}
 	}
 }
