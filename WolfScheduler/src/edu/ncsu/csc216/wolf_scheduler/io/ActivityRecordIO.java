@@ -20,7 +20,7 @@ public class ActivityRecordIO {
 	 * 
 	 */
 	public ActivityRecordIO() {
-		// TODO Auto-generated constructor stub
+		//basic constructor of activity record io
 	}
 
 	/**

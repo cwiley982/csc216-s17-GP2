@@ -203,6 +203,16 @@ public class WolfScheduler {
 		}
 	}
 	
+	/**
+	 * Adds an event to schedule - the ArrayList of activities
+	 * 
+	 * @param title of the event
+	 * @param meetingDays of the event
+	 * @param startTime of the event
+	 * @param endTime of the event
+	 * @param weeklyRepeat number of weeks the event will repeat
+	 * @param eventDetails any extra information about the event
+	 */
 	public void addEvent(String title, String meetingDays, int startTime, int endTime, int weeklyRepeat, String eventDetails) {
 		Event event = new Event(title, meetingDays, startTime, endTime, weeklyRepeat, eventDetails);
 		int count = 0;

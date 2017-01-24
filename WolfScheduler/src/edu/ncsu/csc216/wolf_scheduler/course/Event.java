@@ -4,16 +4,27 @@
 package edu.ncsu.csc216.wolf_scheduler.course;
 
 /**
+ * Creates an event so Students can add things like lunch to their schedule
+ * 
  * @author Caitlyn
  *
  */
 public class Event extends Activity {
 
+	/** Number of weeks the event will repeat */
 	public int weeklyRepeat;
+	/** Extra information about the event */
 	public String eventDetails;
 	
 	/**
+	 * Constructs the Event object using the super class
 	 * 
+	 * @param title of the event
+	 * @param meetingDays of the event
+	 * @param startTime of the event
+	 * @param endTime of the event
+	 * @param weeklyRepeat number of weeks the event will repeat
+	 * @param eventDetails extra information about the event
 	 */
 	public Event (String title, String meetingDays, int startTime, int endTime, int weeklyRepeat, String eventDetails) {
 		super(title, meetingDays, startTime, endTime);
@@ -22,6 +33,8 @@ public class Event extends Activity {
 	}
 
 	/**
+	 * Gets the number of times the event will repeat
+	 * 
 	 * @return the weeklyRepeat
 	 */
 	public int getWeeklyRepeat() {
@@ -29,6 +42,8 @@ public class Event extends Activity {
 	}
 
 	/**
+	 * Sets the number of times the event will repeat
+	 * 
 	 * @param weeklyRepeat the weeklyRepeat to set
 	 */
 	public void setWeeklyRepeat(int weeklyRepeat) {
@@ -39,6 +54,8 @@ public class Event extends Activity {
 	}
 
 	/**
+	 * Gets the extra details about the event
+	 * 
 	 * @return the eventDetails
 	 */
 	public String getEventDetails() {
@@ -46,6 +63,8 @@ public class Event extends Activity {
 	}
 
 	/**
+	 * Sets the extra details about the event
+	 * 
 	 * @param eventDetails the eventDetails to set
 	 */
 	public void setEventDetails(String eventDetails) {
@@ -55,8 +74,13 @@ public class Event extends Activity {
 		this.eventDetails = eventDetails;
 	}
 	
+	/**
+	 * Sets the days the event will occur on
+	 * 
+	 * @param meetingDays the days on which the event will occur
+	 */
 	public void setMeetingDays(String meetingDays) {
-		if (meetingDays == null || meetingDays == "") {
+		if (meetingDays == null || meetingDays.equals("")) {
 			throw new IllegalArgumentException();
 		}
 		if (meetingDays.indexOf("A") != -1) {

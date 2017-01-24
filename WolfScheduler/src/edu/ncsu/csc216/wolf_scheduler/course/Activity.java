@@ -183,7 +183,7 @@ public abstract class Activity {
 	
 	public abstract String[] getLongDisplayArray();
 	
-	 public abstract boolean isDuplicate(Activity activity);
+	public abstract boolean isDuplicate(Activity activity);
 	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
