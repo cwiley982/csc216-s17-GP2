@@ -360,7 +360,7 @@ public class WolfSchedulerGUI extends JFrame implements ActionListener {
 				if (row == -1) {
 					JOptionPane.showMessageDialog(WolfSchedulerGUI.this, "No item selected in the schedule.");
 				} else {
-					scheduler.removeCourse(tableSchedule.getValueAt(row, 0).toString(), tableSchedule.getValueAt(row, 1).toString());
+					scheduler.removeActivity(-1);
 				}
 				updateTables();
 			} else if (e.getSource() == btnReset) {

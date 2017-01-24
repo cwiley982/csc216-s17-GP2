@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import edu.ncsu.csc216.wolf_scheduler.course.Activity;
 import edu.ncsu.csc216.wolf_scheduler.course.Course;
+import edu.ncsu.csc216.wolf_scheduler.course.Event;
 import edu.ncsu.csc216.wolf_scheduler.io.ActivityRecordIO;
 import edu.ncsu.csc216.wolf_scheduler.io.CourseRecordIO;
 
@@ -139,17 +140,14 @@ public class WolfScheduler {
 	/**
 	 * Tells whether a course can be removed from the schedule or not based on whether it's already
 	 * in the schedule
+	 * @param idx index of the activity to be removed
 	 * 
-	 * @param name of the course
-	 * @param section of the course
-	 * @return true if course can be removed
+	 * @return true if activity can be removed, false if not
 	 */
-	public boolean removeCourse(String name, String section) {
-		for (int i = 0; i < schedule.size(); i++) {
-			if (schedule.get(i).getName().equals(name) && schedule.get(i).getSection().equals(section)) {
-				schedule.remove(schedule.get(i));
-				return true;
-			}
+	public boolean removeActivity(int idx) {
+		if (idx > 0 && idx < schedule.size() - 1) {
+			schedule.remove(idx);
+			return true;
 		}
 		return false;
 	}
@@ -172,15 +170,36 @@ public class WolfScheduler {
 			}
 		}
 		//goes through entire schedule to see if student is already enrolled in the course (if it's a duplicate)
+		int count = 0;
 		for (int i = 0; i < schedule.size(); i++) {
 			if (course.isDuplicate(schedule.get(i))) {
 				throw new IllegalArgumentException("You are already enrolled in " + name);
+			} else {
+				count++;
 			}
 		}
 		//adds course to schedule
-		schedule.add(course);
-		return true;
- 		//return false;
+		if (count == schedule.size()) {
+			schedule.add(course);
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public void addEvent(String title, String meetingDays, int startTime, int endTime, int weeklyRepeat, String eventDetails) {
+		Event event = new Event(title, meetingDays, startTime, endTime, weeklyRepeat, eventDetails);
+		int count = 0;
+		for (int i = 0; i < schedule.size(); i++) {
+			if (event.isDuplicate(schedule.get(i))) {
+				throw new IllegalArgumentException("You have already created an event called " + event.getTitle() + ".");
+			} else {
+				count++;
+			}
+		}
+		if (count == schedule.size()) {
+			schedule.add(event);
+		}
 	}
 
 	/**
@@ -203,7 +222,7 @@ public class WolfScheduler {
 	 * Resets the schedule to an empty ArrayList
 	 */
 	public void resetSchedule() {
-		schedule = new ArrayList<Course>();	
+		schedule = new ArrayList<Activity>();	
 	}
 
 }
