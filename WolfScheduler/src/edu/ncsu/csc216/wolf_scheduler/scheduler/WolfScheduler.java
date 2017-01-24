@@ -53,11 +53,12 @@ public class WolfScheduler {
 		if (courseCatalog == null) {
 			return new String[1][1];
 		}
-		String catalog[][] = new String[courseCatalog.size()][3];
+		String catalog[][] = new String[courseCatalog.size()][4];
 		for (int i = 0; i < courseCatalog.size(); i++) {
 			catalog[i][0] = courseCatalog.get(i).getName();
 			catalog[i][1] = courseCatalog.get(i).getSection();
 			catalog[i][2] = courseCatalog.get(i).getTitle();
+			catalog[i][3] = courseCatalog.get(i).getMeetingString();
 		}
 		return catalog;
 	}
@@ -68,18 +69,24 @@ public class WolfScheduler {
 	 * 
 	 * @return the 2D array containing all of the information for each course in schedule
 	 */
-	public String[][] getFullScheduledCourses() {
+	public String[][] getFullScheduledActivities() {
 		if (schedule == null) {
 			return new String[1][1];
 		}
 		String fullSchedule[][] = new String[schedule.size()][6];
 		for (int i = 0; i < schedule.size(); i++) {
-			fullSchedule[i][0] = schedule.get(i).getName();
+			if (schedule.get(i) instanceof Course) {
+				fullSchedule[i] = schedule.get(i).getLongDisplayArray();
+			} else if (schedule.get(i) instanceof Event) {
+				fullSchedule[i] = schedule.get(i).getLongDisplayArray();
+			}
+			
+			/*fullSchedule[i][0] = schedule.get(i).getName();
 			fullSchedule[i][1] = schedule.get(i).getSection();
 			fullSchedule[i][2] = schedule.get(i).getTitle();
 			fullSchedule[i][3] = Integer.toString(schedule.get(i).getCredits());
 			fullSchedule[i][4] = schedule.get(i).getInstructorId();
-			fullSchedule[i][5] = schedule.get(i).getMeetingString();
+			fullSchedule[i][5] = schedule.get(i).getMeetingString();*/
 		}
 		return fullSchedule;
 	}
@@ -90,15 +97,20 @@ public class WolfScheduler {
 	 * 
 	 * @return the 2D array containing the schedule info
 	 */
-	public String[][] getScheduledCourses() {
+	public String[][] getScheduledActivities() {
 		if (schedule == null) {
 			return new String[1][1];
 		}
 		String partialSchedule[][] = new String[schedule.size()][3];
 		for (int i = 0; i < schedule.size(); i++) {
-			partialSchedule[i][0] = schedule.get(i).getName();
+			if (schedule.get(i) instanceof Course) {
+				partialSchedule[i] = schedule.get(i).getShortDisplayArray();
+			} else if (schedule.get(i) instanceof Event) {
+				partialSchedule[i] = schedule.get(i).getShortDisplayArray();
+			}
+			/*partialSchedule[i][0] = schedule.get(i).getName();
 			partialSchedule[i][1] = schedule.get(i).getSection();
-			partialSchedule[i][2] = schedule.get(i).getTitle();
+			partialSchedule[i][2] = schedule.get(i).getTitle();*/
 		}
 		return partialSchedule;
 	}
@@ -145,7 +157,7 @@ public class WolfScheduler {
 	 * @return true if activity can be removed, false if not
 	 */
 	public boolean removeActivity(int idx) {
-		if (idx > 0 && idx < schedule.size() - 1) {
+		if (idx >= 0 && idx < schedule.size()) {
 			schedule.remove(idx);
 			return true;
 		}
@@ -168,6 +180,10 @@ public class WolfScheduler {
 			if (courseCatalog.get(i).getName().equals(name) && courseCatalog.get(i).getSection().equals(section)) {
 				course = courseCatalog.get(i);
 			}
+		}
+		//if course doesn't exist so course is still null
+		if (course == null) {
+			return false;
 		}
 		//goes through entire schedule to see if student is already enrolled in the course (if it's a duplicate)
 		int count = 0;
@@ -192,7 +208,7 @@ public class WolfScheduler {
 		int count = 0;
 		for (int i = 0; i < schedule.size(); i++) {
 			if (event.isDuplicate(schedule.get(i))) {
-				throw new IllegalArgumentException("You have already created an event called " + event.getTitle() + ".");
+				throw new IllegalArgumentException("You have already created an event called " + event.getTitle());
 			} else {
 				count++;
 			}

@@ -289,8 +289,9 @@ public class Course extends Activity {
 			course = (Course) activity;
 			if (course.getName().equals(this.getName())) {
 				return true; //if the names do match therefore it's a duplicate
+			} else {
+				return false; //if the names don't match
 			}
-			return false; //if the names don't match
 		} else { //if activity is an event
 			return false;
 		}
