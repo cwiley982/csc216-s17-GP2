@@ -1,5 +1,11 @@
 package edu.ncsu.csc216.wolf_scheduler.course;
 
+/**
+ * Creates an Activity object to act as a super class for Event and Course
+ * 
+ * @author Caitlyn Wiley
+ *
+ */
 public abstract class Activity {
 	
 	/** If the time is any higher, it is invalid */
@@ -15,6 +21,14 @@ public abstract class Activity {
 	/** Course's ending time */
 	private int endTime;
 
+	/**
+	 * Creates an activity
+	 * 
+	 * @param title of the activity
+	 * @param meetingDays when the activity will occur
+	 * @param startTime when the activity will start
+	 * @param endTime when the activity will end
+	 */
 	public Activity(String title, String meetingDays, int startTime, int endTime) {
 		setTitle(title);
 		setMeetingDays(meetingDays);
@@ -163,7 +177,7 @@ public abstract class Activity {
 				}
 				meetingString += "PM";
 			} else if (endHour == 12) {
-				meetingString +=endHour + ":" + endMinutes;
+				meetingString += endHour + ":" + endMinutes;
 				if (endMinutes == 0) {
 					meetingString += "0";
 				}
@@ -179,10 +193,26 @@ public abstract class Activity {
 		}
 	}
 
+	/**
+	 * Gets the details of the activity the method is being called on
+	 * 
+	 * @return String array containing details about the activity
+	 */
 	public abstract String[] getShortDisplayArray();
 	
+	/**
+	 * Gets all of the details of the activity the method is called on
+	 * 
+	 * @return the String array containing details about the activity
+	 */
 	public abstract String[] getLongDisplayArray();
 	
+	/**
+	 * Checks one activity against another to see if it's already in the schedule
+	 * 
+	 * @param activity the activity to compare another activity to
+	 * @return true if the activity is already in the schedule
+	 */
 	public abstract boolean isDuplicate(Activity activity);
 	
 	/* (non-Javadoc)

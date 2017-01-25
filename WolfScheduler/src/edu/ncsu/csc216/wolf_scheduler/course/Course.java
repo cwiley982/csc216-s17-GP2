@@ -184,6 +184,11 @@ public class Course extends Activity {
 		this.instructorId = instructorId;
 	}
 
+	/**
+	 * Sets the meeting days for the course
+	 * 
+	 * @param meetingDays the days the course will be held
+	 */
 	public void setMeetingDays(String meetingDays) {
 		if (meetingDays == null) {
 			throw new IllegalArgumentException();
@@ -263,22 +268,25 @@ public class Course extends Activity {
 	@Override
 	public String toString() {
 		if (getMeetingDays().equals("A")) {
-			return name + "," + getTitle() + "," + section + "," + credits + "," + instructorId + ","
-		+ getMeetingDays();
+			return name + "," + getTitle() + "," + section + "," + credits + "," + instructorId + 
+					"," + getMeetingDays();
 		}
-		return name + "," + getTitle() + "," + section + "," + credits + "," + instructorId + "," + 
-		getMeetingDays() + "," + getStartTime() + "," + getEndTime();
+		return name + "," + getTitle() + "," + section + "," + credits + "," + instructorId + "," 
+		+ getMeetingDays() + "," + getStartTime() + "," + getEndTime();
 	}
 
 	@Override
 	public String[] getShortDisplayArray() {
-		String[] shortArray = {this.getName(), this.getSection(), this.getTitle(), this.getMeetingString()};
+		String[] shortArray = {this.getName(), this.getSection(), this.getTitle(), 
+				this.getMeetingString()};
 		return shortArray;
 	}
 
 	@Override
 	public String[] getLongDisplayArray() {
-		String[] longArray = {this.getName(), this.getSection(), this.getTitle(), Integer.toString(this.getCredits()), this.getInstructorId(), this.getMeetingString(), ""};
+		String[] longArray = {this.getName(), this.getSection(), this.getTitle(), 
+				Integer.toString(this.getCredits()), this.getInstructorId(), 
+				this.getMeetingString(), ""};
 		return longArray;
 	}
 
@@ -287,11 +295,7 @@ public class Course extends Activity {
 		Course course = null;
 		if (activity instanceof Course) {
 			course = (Course) activity;
-			if (course.getName().equals(this.getName())) {
-				return true; //if the names do match therefore it's a duplicate
-			} else {
-				return false; //if the names don't match
-			}
+			return course.getName().equals(this.getName()); //if names are equal, condition is true so true is returned
 		} else { //if activity is an event
 			return false;
 		}
